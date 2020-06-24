@@ -1,0 +1,65 @@
+body {
+  background-color: #03a9f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 600px;
+}
+
+.new-note {
+  background-color: #fff;
+  padding: 10px 12px;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.new-note__input {
+  width: 100%;
+  border: none;
+}
+.new-note__input:focus {
+  outline: none;
+}
+
+.note-list {
+  margin: 40px 0;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 10px 12px;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.note__text {
+  flex: 1;
+}
+.note__input {
+  flex: 1;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  border-bottom: 1px solid #c7c7c7;
+}
+.note__button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.note__button--hidden {
+  visibility: hidden;
+}
+.note__button--red {
+  color: #f44336;
+}
+.note__button--green {
+  color: #4caf50;
+}
+
+/*# sourceMappingURL=/myapp.e31bb0bc.css.map */
