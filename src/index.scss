@@ -37,10 +37,11 @@ body {
   @include box-shadow(2);
 
   &__container {
+    height: 46px;
     display: flex;
     align-items: center;
     margin: 0 auto;
-    padding: 12px $app-padding;
+    padding: 0 $app-padding;
     max-width: $container-max-width;
   }
 

@@ -14,6 +14,9 @@ class App extends React.Component {
     saveHasError: false,
   };
 
+  componentDidCatch() {
+    this.setState({ reloadHasError: true });
+  }
   componentDidMount() {
     this.handleReload();
   }
@@ -37,6 +40,7 @@ class App extends React.Component {
         newNotes.splice(index + 1, 0, removeNote);
       }
       this.handleSave(newNotes);
+
       return {
         notes: newNotes,
       };
@@ -79,7 +83,10 @@ class App extends React.Component {
   };
 
   handleSave = (notes) => {
-    this.setState({ isLoading: true, saveHasError: false });
+    console.log(notes);
+    //this.setState({ isLoading: true, saveHasError: false });
+    console.log("depois");
+
     NoteService.save(notes)
       .then(() => {
         this.setState({ isLoading: false });

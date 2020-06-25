@@ -28893,8 +28893,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var failedLoadAttempts = 1;
-var failedSaveAttempts = 1;
+var faliedLoadAttempts = 2;
+var faliedSaveAttempts = 1;
 
 var NoteService = /*#__PURE__*/function () {
   function NoteService() {
@@ -28906,12 +28906,12 @@ var NoteService = /*#__PURE__*/function () {
     value: function load() {
       return new Promise(function (resolve, reject) {
         setTimeout(function () {
-          if (failedLoadAttempts > 1) {
+          if (faliedLoadAttempts > 1) {
             var notes = window.localStorage.getItem("notes");
-            resolve(JSON.parse(notes));
+            resolve(notes ? JSON.parse(notes) : []);
           } else {
             reject();
-            failedLoadAttempts++;
+            faliedLoadAttempts++;
           }
         }, 2000);
       });
@@ -28921,12 +28921,12 @@ var NoteService = /*#__PURE__*/function () {
     value: function save(notes) {
       return new Promise(function (resolve, reject) {
         setTimeout(function () {
-          if (failedSaveAttempts > 1) {
+          if (faliedSaveAttempts > 1) {
             window.localStorage.setItem("notes", JSON.stringify(notes));
             resolve();
           } else {
             reject();
-            failedSaveAttempts++;
+            faliedSaveAttempts++;
           }
         }, 2000);
       });
@@ -28936,8 +28936,7 @@ var NoteService = /*#__PURE__*/function () {
   return NoteService;
 }();
 
-var _default = NoteService;
-exports.default = _default;
+exports.default = NoteService;
 },{}],"components/Error.js":[function(require,module,exports) {
 "use strict";
 
@@ -29105,10 +29104,9 @@ var App = /*#__PURE__*/function (_React$Component) {
         });
       });
     }, _this.handleSave = function (notes) {
-      _this.setState({
-        isLoading: true,
-        saveHasError: false
-      });
+      console.log(notes); //this.setState({ isLoading: true, saveHasError: false });
+
+      console.log("depois");
 
       _NoteService.default.save(notes).then(function () {
         _this.setState({
@@ -29124,6 +29122,13 @@ var App = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: "componentDidCatch",
+    value: function componentDidCatch() {
+      this.setState({
+        reloadHasError: true
+      });
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.handleReload();
@@ -29206,7 +29211,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59972" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64306" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
