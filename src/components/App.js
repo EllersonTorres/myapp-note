@@ -1,15 +1,17 @@
-import React from "react";
+import React, { Fragment } from "react";
 import uuid from "uuid/dist/v1";
 import NewNote from "./NewNote";
 import NoteList from "./NoteList";
 import AppBar from "./AppBar";
 import NoteService from "../services/NoteService";
 import Error from "./Error";
+import NavigationDrawer from "./NavigationDrawer";
 
 class App extends React.Component {
   state = {
     notes: [],
     isLoading: false,
+    isMenuOpen: false,
     reloadHasError: false,
     saveHasError: false,
   };
@@ -83,10 +85,7 @@ class App extends React.Component {
   };
 
   handleSave = (notes) => {
-    console.log(notes);
-    //this.setState({ isLoading: true, saveHasError: false });
-    console.log("depois");
-
+    this.setState({ isLoading: true, saveHasError: false });
     NoteService.save(notes)
       .then(() => {
         this.setState({ isLoading: false });
@@ -96,22 +95,37 @@ class App extends React.Component {
       });
   };
 
+  handleOpenMenu = () => {
+    this.setState({ isMenuOpen: true });
+  };
+
+  handleCloseMenu = () => {
+    this.setState({ isMenuOpen: false });
+  };
+
   render() {
-    const { notes, isLoading, reloadHasError, saveHasError } = this.state;
+    const {
+      notes,
+      isLoading,
+      isMenuOpen,
+      reloadHasError,
+      saveHasError,
+    } = this.state;
     return (
       <div>
         <AppBar
           isLoading={isLoading}
-          SaveHasError={saveHasError}
+          saveHasError={saveHasError}
           onSaveRetry={() => {
             this.handleSave(notes);
           }}
+          onOpenMenu={this.handleOpenMenu}
         />
         <div className="container">
           {reloadHasError ? (
             <Error onRetry={this.handleReload} />
           ) : (
-            <React.Fragment>
+            <Fragment>
               <NewNote onAddNote={this.handleAddNote} />
               <NoteList
                 notes={notes}
@@ -119,9 +133,13 @@ class App extends React.Component {
                 onDelete={this.handleDelete}
                 onEdit={this.handleEdit}
               />
-            </React.Fragment>
+            </Fragment>
           )}
         </div>
+        <NavigationDrawer
+          isOpen={isMenuOpen}
+          onCloseMenu={this.handleCloseMenu}
+        />
       </div>
     );
   }

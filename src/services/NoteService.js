@@ -1,4 +1,4 @@
-let faliedLoadAttempts = 2;
+let faliedLoadAttempts = 1;
 let faliedSaveAttempts = 1;
 export default class NoteService {
   static load() {
